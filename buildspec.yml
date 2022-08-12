@@ -8,4 +8,4 @@ phases:
       - export PATH=$PATH:$HOME/.pulumi/bin
   build:
     commands:
-      - update_pulumi_stack.sh  
+      - ./update_pulumi_stack.sh
