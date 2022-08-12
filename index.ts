@@ -84,23 +84,6 @@ const buildRolePolicy = new aws.iam.RolePolicy("buildRolePolicy", {
     {
       "Effect": "Allow",
       "Action": [
-        "ec2:CreateNetworkInterfacePermission"
-      ],
-      "Resource": [
-        "arn:aws:ec2:us-east-1:123456789012:network-interface/*"
-      ],
-      "Condition": {
-        "StringEquals": {
-          "ec2:Subnet": [
-            "arn:aws:ec2:*:*:subnet/*"
-          ],
-          "ec2:AuthorizedService": "codebuild.amazonaws.com"
-        }
-      }
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
         "s3:*"
       ],
       "Resource": [
@@ -129,17 +112,6 @@ const buildProject = new aws.codebuild.Project("buildProject", {
         image: "aws/codebuild/standard:1.0",
         type: "LINUX_CONTAINER",
         imagePullCredentialsType: "CODEBUILD",
-        // environmentVariables: [
-        //     {
-        //         name: "SOME_KEY1",
-        //         value: "SOME_VALUE1",
-        //     },
-        //     {
-        //         name: "SOME_KEY2",
-        //         value: "SOME_VALUE2",
-        //         type: "PARAMETER_STORE",
-        //     },
-        // ],
     },
     logsConfig: {
         cloudwatchLogs: {
