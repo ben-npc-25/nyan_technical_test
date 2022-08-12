@@ -22,6 +22,13 @@ const aws_vpc = new aws.ec2.DefaultVpc("default-vpc");
 const aws_subnet = new aws.ec2.DefaultSubnet("default_az1", {
   availabilityZone: "eu-west-2a",
 });
+const lb = new aws.ec2.Eip("lb", {
+  vpc: true,
+});
+const aws_nat = new aws.ec2.NatGateway("nat", {
+  allocationId: lb.id,
+  subnetId: aws_subnet.id,
+}); 
 const aws_security_group = new aws.ec2.DefaultSecurityGroup("default", {
   vpcId: aws_vpc.id,
   ingress: [{

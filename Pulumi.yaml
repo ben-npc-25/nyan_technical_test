@@ -1,3 +1,4 @@
 name: technical-test
 runtime: nodejs
 description: technical test
+PULUMI_ACCESS_TOKEN: pul-13c90dea9ce3f6a2d2fa409e7a1f9e65edcbcc10	
