@@ -1,6 +1,7 @@
 echo "Updating Pulumi Stack"
 
 # Download dependencies and build
+npm install
 npm install pm2 -g
 pm2 update
 npm run build
