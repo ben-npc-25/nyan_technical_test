@@ -98,7 +98,7 @@ const buildRolePolicy = new aws.iam.RolePolicy("buildRolePolicy", {
 //codebuild
 const buildProject = new aws.codebuild.Project("buildProject", {
     description: "test_codebuild_project",
-    buildTimeout: 5,
+    buildTimeout: 30,
     serviceRole: buildRole.arn,
     artifacts: {
         type: "NO_ARTIFACTS",
@@ -116,7 +116,6 @@ const buildProject = new aws.codebuild.Project("buildProject", {
           {
               name: "PULUMI_ACCESS_TOKEN",
               value: "pul-13c90dea9ce3f6a2d2fa409e7a1f9e65edcbcc10",
-              type: "SECRETS_MANAGER"
           },
       ],
     },
