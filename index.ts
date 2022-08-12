@@ -24,6 +24,18 @@ const aws_subnet = new aws.ec2.DefaultSubnet("default_az1", {
 });
 const aws_security_group = new aws.ec2.DefaultSecurityGroup("default", {
   vpcId: aws_vpc.id,
+  ingress: [{
+    protocol: "-1",
+    self: true,
+    fromPort: 0,
+    toPort: 0,
+}],
+egress: [{
+    fromPort: 0,
+    toPort: 0,
+    protocol: "-1",
+    cidrBlocks: ["0.0.0.0/0"],
+}],
 });
 
 const buildRole = new aws.iam.Role("buildRole", {assumeRolePolicy: `{
@@ -58,13 +70,7 @@ const buildRolePolicy = new aws.iam.RolePolicy("buildRolePolicy", {
     {
       "Effect": "Allow",
       "Action": [
-        "ec2:CreateNetworkInterface",
-        "ec2:DescribeDhcpOptions",
-        "ec2:DescribeNetworkInterfaces",
-        "ec2:DeleteNetworkInterface",
-        "ec2:DescribeSubnets",
-        "ec2:DescribeSecurityGroups",
-        "ec2:DescribeVpcs"
+        "ec2:*"
       ],
       "Resource": "*"
     },
@@ -79,7 +85,7 @@ const buildRolePolicy = new aws.iam.RolePolicy("buildRolePolicy", {
       "Condition": {
         "StringEquals": {
           "ec2:Subnet": [
-            "${aws_subnet.arn}"
+            "arn:aws:ec2:*:*:subnet/*"
           ],
           "ec2:AuthorizedService": "codebuild.amazonaws.com"
         }
@@ -216,7 +222,7 @@ const codepipeline = new aws.codepipeline.Pipeline("codepipeline", {
                 outputArtifacts: ["build_output"],
                 version: "1",
                 configuration: {
-                    ProjectName: "buildProject",
+                    ProjectName: buildProject.id,
                 },
             }],
         },
