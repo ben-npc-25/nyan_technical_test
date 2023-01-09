@@ -115,7 +115,7 @@ const buildProject = new aws.codebuild.Project("buildProject", {
         environmentVariables: [
           {
               name: "PULUMI_ACCESS_TOKEN",
-              value: "pul-13c90dea9ce3f6a2d2fa409e7a1f9e65edcbcc10",
+              value: "PULUMI_ACCESS_TOKEN",
           },
       ],
     },
